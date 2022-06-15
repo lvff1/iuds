@@ -1,0 +1,15 @@
+# 主配置
+
+# 选择生产环境
+spring:
+  profiles:
+    active: dev
+
+# 改端口号
+server:
+  port: 8001
+  servlet:
+    # 配置上下文路径  但是一般直接在controller上配置
+    context-path: /user
+
+

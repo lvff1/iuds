@@ -1,0 +1,35 @@
+my:
+  user1:
+    uid: 100
+    username: swb
+    userString:
+      - A1
+      - A2
+      - A3
+    userSet:
+      - B1
+      - B2
+    userMap:
+      k1: v1
+      k2: v3
+    userProperties:
+      k1: vv1
+      k2: vv2
+
+  user:
+    uid: 100
+    username: swbswb
+    userString:
+      - A1
+      - A2
+      - A3
+    userSet:
+      - B1
+      - B2
+    userMap:
+      k1: v1
+      k2: v3
+    userProperties:
+      k1: vv1
+      k2: vv2
+
