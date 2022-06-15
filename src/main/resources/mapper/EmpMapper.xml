@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swb.springbootmybatis.dao.EmpDao">
+    <sql id="base_info">
+        empno,ename,sal,comm,hiredate,job,mgr,deptno
+    </sql>
+
+    <select id="getAllEmp" resultType="emp">
+        select  empno,ename,sal,comm,hiredate,job,mgr,deptno from t_emp;
+    </select>
+
+
+    <insert id="addEmp" parameterType="emp">
+
+        insert  into t_emp(ename,sal,comm,hiredate,job,mgr,deptno)
+        values (
+            #{ename},
+            #{sal},
+            #{comm},
+            #{hiredate},
+            #{job},
+            #{mgr},
+            #{deptno}
+
+        )
+    </insert>
+
+    <update id="updateEmp" parameterType="emp">
+        update t_emp set
+        <if test="ename!=null and ename!=''">
+            ename=#{ename},
+        </if>
+        <if test="sal!=0">
+            sal=#{sal},
+        </if>
+
+          <if test="comm!=0">
+            sal=#{sal},
+        </if>
+         <if test="hiredate!=null">
+             hiredate=#{hiredate},
+        </if>
+        <if test="job!=null and job!=''">
+            job=#{job},
+        </if>
+        <if test="mgr!=0">
+            mgr=#{mgr},
+        </if>
+        <if test="deptno!=0">
+            deptno=#{deptno}
+        </if>
+        where
+        empno=#{empno}
+
+
+    </update>
+
+    <delete id="deleteEmp" parameterType="int">
+        delete from t_emp where empno=#{empno}
+    </delete>
+</mapper>
