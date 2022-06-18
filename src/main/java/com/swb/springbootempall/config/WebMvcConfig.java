@@ -4,6 +4,7 @@ import com.swb.springbootempall.interceptor.MyInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -34,5 +35,23 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 拦截所有请求
         registry.addInterceptor(myInterceptor).addPathPatterns("/**");
 
+
+    }
+
+    /**
+     * 解决跨域问题
+     * @param registry
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry
+                //所有路径
+                .addMapping("/**")
+                // 所有方法
+                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                // 所有的头部信息
+                .allowedHeaders("*")
+                //所有的域名
+                .allowedOrigins("*");
     }
 }

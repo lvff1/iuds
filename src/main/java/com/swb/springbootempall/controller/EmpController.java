@@ -40,13 +40,13 @@ public class EmpController {
     }
 
     /**
-     * 删除 -- 单个删除
+     * 删除/批量删除
      */
-    @DeleteMapping("/remove/{empno}")
-    public R removeEmp(@PathVariable Integer empno) {
-        System.out.println("删除：" + empno);
+    @PostMapping("/remove")
+    public R removeEmp(@RequestBody List<Integer> empnos) {
+        System.out.println("删除：" + empnos);
 
-        if (empService.removeById(empno)) {
+        if (empService.removeBatchByIds(empnos)) {
             return R.ok("删除成功！");
         }
         return R.error("删除失败");
@@ -57,7 +57,7 @@ public class EmpController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     public R updateEmp(@RequestBody Emp emp) {
         System.out.println("更新：" + emp);
 
@@ -73,7 +73,7 @@ public class EmpController {
     @GetMapping("/list")
     public R listEmp() {
         List<Emp> empList = empService.list();
-        empList.forEach((e)->System.out.println(e));
+        empList.forEach((e) -> System.out.println(e));
 
         if (empList != null && empList.size() > 0) {
             return R.ok("查询成功！", empList);
@@ -89,9 +89,9 @@ public class EmpController {
     public R getEmpByEno(@PathVariable Integer empno) {
 
         Emp emp = empService.getById(empno);
-        System.out.println("查询的结果为："+emp);
-        if(emp!=null){
-            return  R.ok("查询成功！",emp);
+        System.out.println("查询的结果为：" + emp);
+        if (emp != null) {
+            return R.ok("查询成功！", emp);
         }
         return R.error("查询失败！");
     }

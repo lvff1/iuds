@@ -41,13 +41,13 @@ public class DeptController {
     }
 
     /**
-     * 删除 -- 单个删除
+     * 删除   要进行传值  所以是PostMapping
      */
-    @DeleteMapping("/remove/{deptno}")
-    public R removeDept(@PathVariable Integer deptno) {
+    @PostMapping("/remove")
+    public R removeDept(@RequestBody List<Integer> deptno) {
         System.out.println("删除：" + deptno);
 
-        if (deptService.removeById(deptno)) {
+        if (deptService.removeBatchByIds(deptno)) {
             return R.ok("删除成功！");
         }
         return R.error("删除失败");
@@ -58,7 +58,7 @@ public class DeptController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     public R updateDept(@RequestBody Dept dept) {
         System.out.println("更新：" + dept);
 

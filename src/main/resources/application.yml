@@ -1,13 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/2202myschool
+    url: jdbc:mysql://localhost:3306/2202myschool?serverTimezone=GMT%2B8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
-mybatis:
-  type-aliases-package: com.swb.springbootempall.entity
 #  mapper-locations: classpath*:mapper/*Mapper.xml
 
 
@@ -18,3 +16,7 @@ logging:
 
 server:
   port: 8082
+  
+mybatis-plus:
+  mapper-locations:
+    type-aliases-package: com.swb.springbootempall.entity
