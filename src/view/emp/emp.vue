@@ -2,6 +2,7 @@
   <div>
     <el-button type="primary" @click="openDialog" plain>添加员工</el-button>
     <el-button type="danger" plain @click="empDel">批量删除</el-button>
+    <!-- 数据展示部分 -->
     <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%"
       @selection-change="empSelectionChange" fit stripe border :cell-style="{ textAlign: 'center' }"
       :header-cell-style="{ textAlign: 'center' }">
@@ -16,7 +17,6 @@
       <el-table-column prop="job" label="职位" width="120">
       </el-table-column>
       <el-table-column prop="hiredate" label="入职日期" width="120">
-
       </el-table-column>
       <el-table-column prop="mgr" label="老板" width="120">
       </el-table-column>
