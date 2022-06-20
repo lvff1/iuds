@@ -6,17 +6,18 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
-#  mapper-locations: classpath*:mapper/*Mapper.xml
+
 
 
 logging:
   level:
-    com.swb.springbootmybatis.mapper: debug
+    com.swb.springbootempall.mapper: debug
 
 
 server:
   port: 8082
-  
+
 mybatis-plus:
   mapper-locations:
     type-aliases-package: com.swb.springbootempall.entity
+    mapper-locations: classpath*:mapper/*Mapper.xml

@@ -1,12 +1,15 @@
 package com.swb.springbootempall.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.swb.springbootempall.common.utils.R;
 import com.swb.springbootempall.entity.Emp;
 import com.swb.springbootempall.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @title: EmpController
@@ -95,6 +98,33 @@ public class EmpController {
         }
         return R.error("查询失败！");
     }
+
+
+    /**
+     * 分页查询
+     */
+    @PostMapping("/page")
+    public R getEmpByPage(@RequestBody Page<Emp> page01) {
+
+        Page<Emp> page = empService.page(page01);
+        System.out.println(page.getSize());
+        if (ObjectUtils.isEmpty(page)) {
+            return R.error("查询条件为空");
+        }
+        return R.ok(page);
+
+    }
+
+    /**
+     * 根据条件查询
+     */
+    @PostMapping("/query")
+    public R doQuery(@RequestBody Map<String,Object> map){
+        System.out.println("map:"+map);
+        // 使用map来接受多个对象的值
+        return R.ok( empService.doQuery(map));
+    }
+
 
 
 }

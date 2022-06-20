@@ -1,7 +1,11 @@
 package com.swb.springbootempall.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.swb.springbootempall.entity.Emp;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @title: EmpService
@@ -11,4 +15,5 @@ import com.swb.springbootempall.entity.Emp;
  * @version: study
  */
 public interface EmpService extends IService<Emp> {
+    IPage<Emp> doQuery(Map<String, Object> map);
 }

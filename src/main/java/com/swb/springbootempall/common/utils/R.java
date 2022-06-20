@@ -19,7 +19,6 @@ import java.util.HashMap;
 //@NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
 public class R extends HashMap {
 
     /**

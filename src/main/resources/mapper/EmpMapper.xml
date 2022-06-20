@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swb.springbootempall.mapper.EmpMapper">
+
+    <select id="empPage" resultType="com.swb.springbootempall.entity.Emp">
+        select * from t_emp
+        <where>
+            <if test="map.ename!=null and map.ename!=''">
+                ename like concat("%",#{map.ename},"%")
+            </if>
+            <if test="map.deptno!=null and map.deptno!=''">
+               and deptno = #{map.deptno}
+            </if>
+        </where>
+
+
+    </select>
+</mapper>

@@ -27,6 +27,10 @@ public class MyInterceptor implements HandlerInterceptor {
         System.out.println("当前请求url为:"+request.getRequestURI());
         System.out.println("============================");
 
+
+
+
+
         return true;
     }
 
