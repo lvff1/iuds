@@ -5,14 +5,13 @@ import App from './App'
 // 导入路由表
 import router from "./router"
 
-// 导入a
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+
 
 //  导入element-ui组件库及相关样式
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+import http from './request/request'
 
 
 Vue.config.productionTip = false
@@ -20,7 +19,11 @@ Vue.config.productionTip = false
 // 进行全局注册
 
 Vue.use(ElementUI)
-Vue.use(VueAxios,axios)
+
+// 添加属性
+
+Vue.prototype.http=http
+
 
 
 
