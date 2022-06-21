@@ -1,44 +1,56 @@
 <template>
   <div>
-    <el-button type="primary" @click="openDialog" plain>添加部门</el-button>
-    <el-button type="danger" plain @click="deptDel">批量删除</el-button>
+    <el-button type="primary" @click="openDialog" plain>添加角色</el-button>
+    <el-button type="danger" plain @click="roleDel">批量删除</el-button>
      <!-- 数据展示部分 -->
     <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%"
-      @selection-change="deptSelectionChange" fit stripe border :cell-style="{ textAlign: 'center' }"
+      @selection-change="roleSelectionChange" fit stripe border :cell-style="{ textAlign: 'center' }"
       :header-cell-style="{ textAlign: 'center' }">
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column prop="deptno" label="部门编号" width="120">
+      <el-table-column prop="rname" label="角色名称" width="120">
       </el-table-column>
-      <el-table-column prop="dname" label="部门名称" width="120">
+      <el-table-column prop="rdesc" label="角色描述" width="120">
       </el-table-column>
-      <el-table-column prop="ioc" label="部门地址" width="120">
+      <el-table-column prop="rstatus" label="角色状态" width="120">
+      </el-table-column>
+      <el-table-column prop="createTime" label="角色创建时间" width="120">
       </el-table-column>
     
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" plain @click="deptEdit(scope.row)">编辑</el-button>
-          <el-button size="mini" plain type="danger" @click="deptDel(scope.row)">删除</el-button>
+          <el-button size="mini" plain @click="roleEdit(scope.row)">编辑</el-button>
+          <el-button size="mini" plain type="danger" @click="roleDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 添加修改表单-->
-    <el-dialog title="添加or修改" :visible.sync="deptFormVisible">
+    <el-dialog title="添加or修改" :visible.sync="roleFormVisible">
       <el-form :model="formData">
-        <el-form-item label="部门编号" :label-width="formLabelWidth">
-          <el-input v-model="formData.deptno" autocomplete="off"></el-input>
+       
+        <el-form-item label="角色名称" :label-width="formLabelWidth">
+          <el-input v-model="formData.rname" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="部门名称" :label-width="formLabelWidth">
-          <el-input v-model="formData.dname" autocomplete="off"></el-input>
+        <el-form-item label="角色描述" :label-width="formLabelWidth">
+          <el-input v-model="formData.rdesc" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="部门位置" :label-width="formLabelWidth">
-          <el-input v-model="formData.ioc" autocomplete="off"></el-input>
-         </el-form-item>
+        <el-form-item label="角色状态" :label-width="formLabelWidth">
+          <el-input v-model="formData.rstatus" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="角色创建时间" :label-width="formLabelWidth">
+         <el-col :span="11">
+            <el-form-item prop="createTime">
+              <el-date-picker type="date" placeholder="选择日期" v-model="formData.createTime" format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd" style="width: 100%"></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-form-item>
+       
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="deptFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addOrUpdateDept">确 定</el-button>
+        <el-button @click="roleFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addOrUpdateRole">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -55,13 +67,16 @@ export default {
 
       //添加 修改表单数据
       formData: {
-          deptno:0,
-          dname:'',
-          ioc:''
+        id:0,
+        rname:'',
+        rdesc:'',
+        rstatus:0,
+        createTime:''
+          
       },
       // 添加弹出层是否可见
-      deptFormVisible: false,
-      isSave:false,
+      roleFormVisible: false,
+    
 
       // 批量删除  多选的结果存在这里
       delSelection: [],
@@ -71,13 +86,13 @@ export default {
   // 自定义函数
   methods: {
     // 得到首页数据
-    getDeptList() {
+    getRoleList() {
 
       // 将对象进行封装 可以更好的调用data中的数据 
       var app = this;
       // 发送请求
       this.http({
-        url: "dept/list",
+        url: "role/list",
         methed: "GET"
       }).then(({ data }) => {// 解构表达式 成功后从返回结果中获取到data数据  
         console.log(data)
@@ -93,28 +108,26 @@ export default {
     openDialog() {
 
       // 设置弹出层可见
-        this.deptFormVisible = true
+        this.roleFormVisible = true
 
       //将其设置为默认值
-       this.formData.deptno=0;
-       this.formData.dname='';
-       this.formData.ioc='';
-       this.isSave=true
+        this.formData.id=0;
+        this.formData.rname='',
+        this.formData.rdesc='',
+        this.formData.rstatus=0,
+        this.formData.createTime=''
        
   
     },
     // 添加 
-    addOrUpdateDept() {
-     
-      var url01 = 'save';
+    addOrUpdateRole() {
+    
       var app = this;
-      // 判断formData是否有deptno 如果有则进行修改 否则进信息新增
-      if (!this.isSave) {
-        url01 = 'update'
-      }
+      // 判断formData是否有id 如果有则进行修改 否则进信息新增
+      var url01=this.formData.id?"update":"save"
       // 发送请求
       this.http({
-        url: "dept/" + url01,
+        url: "role/" + url01,
         method: "post",
         // 携带数据
         data: app.formData
@@ -126,9 +139,9 @@ export default {
           type: 'success'
         });
         // 重新加载首页数据
-        this.getDeptList()
+        this.getRoleList()
         // 成功后弹出框消失
-        app.deptFormVisible = false
+        app.roleFormVisible = false
 
 
       }).catch((error) => {
@@ -139,12 +152,12 @@ export default {
     },
 
     // 数据回显
-    deptEdit(row) {
-      this.deptFormVisible = true
-      this.isSave=false
+    roleEdit(row) {
+      this.roleFormVisible = true
+      
       //发送请求
       this.http({
-        url: "dept/info/" + row.deptno,
+        url: "role/info/" + row.id,
         method: "post"
 
       }).then(({ data }) => {
@@ -152,20 +165,20 @@ export default {
         this.formData = data.data
 
         // 显示框框
-      this.deptFormVisible=true
+      this.roleFormVisible=true
 
       })
 
     },
 
     // 删除
-    deptDel(row) {
+    roleDel(row) {
 
       console.log(this.delSelection)
 
       // if(this.delSelection)
       if (row) {
-        this.delSelection.push(row.deptno)
+        this.delSelection.push(row.id)
       }
 
       // 确定删除框
@@ -176,7 +189,7 @@ export default {
       }).then(() => {
         // 发送请求
         this.http({
-          url: "dept/remove",
+          url: "role/remove",
           method: "Post",
           data: this.delSelection
         }).then(() => {
@@ -186,7 +199,7 @@ export default {
             message: '删除成功!'
           });
           //重新加载页面
-          this.getDeptList()
+          this.getRoleList()
         })
 
       }).catch(() => {
@@ -209,10 +222,10 @@ export default {
     },
 
     // 获取多选框中填充了哪些属性及值
-    deptSelectionChange(val) {
+    roleSelectionChange(val) {
       // var array=[]
       for (var i = 0; i <= val.length; i++) {
-        this.delSelection.push(val[i].deptno)
+        this.delSelection.push(val[i].roleno)
       }
 
     }
@@ -220,7 +233,7 @@ export default {
   },
   mounted() {
     // 调用方法
-    this.getDeptList()
+    this.getRoleList()
   },
 
 }

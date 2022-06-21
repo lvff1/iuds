@@ -17,5 +17,7 @@ const http = axios.create({
     headers: {'Content-Type': 'application/json ;charset:utf-8'}
   });
 
+
+  
 // 导出
 export default http

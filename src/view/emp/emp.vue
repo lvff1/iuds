@@ -159,7 +159,7 @@ export default {
       var app = this;
       // 发送请求
       this.http({
-        url: "emp/page",
+        url: "emp/query",
         method: "post",
         // 将当前页及大小传到后台
         data: {

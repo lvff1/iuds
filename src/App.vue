@@ -22,7 +22,18 @@
               <router-link to="/dept">
                 部门管理
               </router-link>
+            </el-menu-item>
 
+            <el-menu-item index="1-3">
+              <router-link to="/user">
+                用户管理
+              </router-link>
+            </el-menu-item>
+
+            <el-menu-item index="1-3">
+              <router-link to="/role">
+                角色管理
+              </router-link>
             </el-menu-item>
           </el-menu-item-group>
 
