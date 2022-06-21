@@ -48,4 +48,9 @@ public class Emp {
     private Integer mgr;
 
     private Integer deptno;
+
+
+    @JSONField
+    private Date createTime;
+
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class EmpController {
      */
     @PostMapping("/save")
     public R saveEmp(@RequestBody Emp emp) {
-
+        emp.setCreateTime(new Date());
         System.out.println("添加：" + emp);
 
         if (empService.save(emp)) {

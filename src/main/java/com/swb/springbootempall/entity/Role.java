@@ -14,31 +14,30 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- * @title: User
+ * @title: Role
  * @author: 流沐颖
- * @date:2022/6/17 12:16
- * @description:
+ * @date:2022/6/21 10:23
+ * @description: 角色表
  * @version: study
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@TableName("t_user")
-public class User {
+
+@TableName("t_role")
+public class Role {
 
     @TableId(type = IdType.AUTO)
     private Integer id;
-
-    private String username;
-    private String password;
-    private Integer sex;
-    private String email;
-    private Integer status;
+    private String rname;
+    private String rdesc;
+    private Integer rstatus;
 
     @JSONField
-    @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date createTime;
+
 
 }
